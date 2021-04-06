@@ -20,7 +20,6 @@ function how_much_food($weightCat, $kcalDry, $kcalWet, $dietType, $percentDry, $
     250,
     265,
     280,
-    295,
     310,
     324,
     339,
