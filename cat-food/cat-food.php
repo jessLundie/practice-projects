@@ -2,10 +2,10 @@
 
 // Feeding calculator for cats based on weight and diet type
 
-function how_much_food($weightCat, $kcalDry, $kcalWet, $dietType, $percentDry, $percentWet) {
-  //constants
-  $tbsConv = 0.0625; // cup / tbs
-  $kcalBase = array (
+function base_caloric_intake($cat_weight) {
+	// $cat_weight set in lbs
+  // RER / day by weight 1-20lbs ref. Hill’s Pet Nutrition calculator
+   $kcalBase = array (
     39,
     65,
     88,
@@ -20,12 +20,19 @@ function how_much_food($weightCat, $kcalDry, $kcalWet, $dietType, $percentDry, $
     250,
     265,
     280,
+    295,
     310,
     324,
     339,
     353,
     366,
-  ); // RER / day by weight 1-20lbs ref. Hill’s Pet Nutrition calculator
+  );
+	return $kcalBase[$cat_weight-1];
+}
+
+function how_much_food($cat_weight, $kcalDry, $kcalWet, $dietType, $percentDry, $percentWet) {
+  //constants
+  $tbsConv = 0.0625; // cup / tbs
 
   $dietMult = array (
     "Neutered adult cat" => 1.2,
@@ -39,12 +46,12 @@ function how_much_food($weightCat, $kcalDry, $kcalWet, $dietType, $percentDry, $
 
   $multiplier = $dietMult[$dietType]; // get multiplier based on diet type
 
-  $kcalFeed = $kcalBase[$weightCat-1] * $multiplier; // calculate total required kcal / day based on weight and diet type
+  $kcalFeed = base_caloric_intake($cat_weight) * $multiplier; // calculate total required kcal / day based on weight and diet type
 
-  $qtyDry = round ((($percentDry * $kcalFeed) / $kcalDry) / $tbsConv, 2); // qty of dry cat food per day as a percent of total food
-  $qtyCan = round (($percentWet * $kcalFeed) / $kcalWet, 2); // qty of wet cat food per day as a percent of total food
+  $qtyDry = round ((($percentDry * $kcalFeed) / $kcalDry) / $tbsConv, 2); // calculate qty dry food(tbs)
+  $qtyCan = round (($percentWet * $kcalFeed) / $kcalWet, 2); // calculate qty wet food (cans)
 
-  if (($weightCat >= 1) && ($weightCat <= 20)) {
+  if (($cat_weight >= 1) && ($cat_weight <= 20)) {
 
     echo "Feed $qtyDry tbs dry food and $qtyCan cans of wet food daily.";
 
@@ -52,5 +59,3 @@ function how_much_food($weightCat, $kcalDry, $kcalWet, $dietType, $percentDry, $
     echo "Please enter a weight between 1 and 20";
   }
 }
-
-how_much_food(1, 410, 190, "Kitten 0 to 4 months", .2, .8);
