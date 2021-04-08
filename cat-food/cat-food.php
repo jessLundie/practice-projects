@@ -50,7 +50,9 @@ function base_caloric_intake($cat_weight) {
       "Kitten 4 months to a year" => 2,
     ); // RER multiplier based on specific factors
 
-    if(base_caloric_intake($cat_weight)) {
+    $weight_check = base_caloric_intake($cat_weight);
+
+    if($weight_check) {
 
       $multiplier = $dietMult[$dietType]; // get multiplier based on diet type
 
@@ -61,7 +63,5 @@ function base_caloric_intake($cat_weight) {
       $qtyCan = round (($percentWet * $kcalFeed) / $kcalWet, 2); // calculate qty wet food (cans)
 
       echo "Feed $qtyDry tbs dry food and $qtyCan cans of wet food daily.";
-    } else {
-
     }
   }
