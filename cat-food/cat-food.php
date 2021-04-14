@@ -29,11 +29,10 @@ function base_caloric_intake( $cat_weight ) {
 	);
 
 	if ( ( $cat_weight >= 1 ) && ( $cat_weight <= 20 ) ) {
-		return $kcal_base[$cat_weight - 1];
+		return $kcal_base[ $cat_weight - 1 ];
 	} else {
-		else {
 			echo 'Please enter a weight between 1 and 20.';
-			return null; 
+			return null;
 	}
 }
 
