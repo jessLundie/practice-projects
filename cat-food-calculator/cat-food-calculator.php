@@ -43,7 +43,7 @@ function cfc_base_caloric_intake( $cat_weight ) {
 		echo 'Please enter a weight between 1 and 20.';
 		return null;
 	}
-	return $kcal_base[ $cat_weight - 1 ]
+	return $kcal_base[ $cat_weight - 1 ];
 }
 
 function cfc_diet_multipliers() {
@@ -115,5 +115,55 @@ function cfc_how_much_food( $cat_weight, $kcal_dry, $kcal_wet, $diet_type, $perc
 
 		$qty_can = round( ( $percent_wet * $kcal_feed ) / $kcal_wet, 2 ); // calculate qty wet food (cans)
 
+		error_log( "Feed $qty_dry tbs dry food and $qty_can cans of wet food daily." );
+
 	}
+}
+
+//Register shortcode
+
+add_shortcode( 'cat-food-calculator', 'cfc_form_shortcode' );
+
+function cfc_form_shortcode() {
+	?>
+
+	<h3>Cat Food Calculator</h3>
+
+	<form action=""<?php echo plugins_url( 'cat-food-calculator.php', __FILE__ ); ?>" method="post">
+	<label for="diet_mult">Cat details / diet preference:</label>
+	<br />
+	<select id="diet_mult" name="diet_type">
+	<?php
+
+	foreach ( cfc_diet_multipliers() as $multiplier ) {
+		echo '<option value="' . $multiplier . '">' . cfc_multiplier_description( $multiplier ) . '</option>' . '<br />';
+	}
+	?>
+	</select>
+	<br />
+	<label for="cat_weight">Enter your cat's weight in lbs (between 1 and 20):</label>
+	<br />
+	<input type="text" name="cat_weight"></input>
+	<br />
+	<label for="kcal_wet">Enter wet food - calories per CAN:</label>
+	<br />
+	<input type="text" name="kcal_wet"></input>
+	<br />
+	<label for="kcal_dry">Enter dry food calories per CUP:</label>
+	<br />
+	<input type="text" name="kcal_dry"></input>
+	<br />
+	<label for="percent_wet">What percentage of the diet would you like to feed in WET food?</label>
+	<br />
+	<input type="text" name="percent_wet"></input>
+	<br />
+	<label for="percent_dry">What percentage of the diet would you like to feed in DRY food?</label>
+	<br />
+	<input type="text" name="percent_dry"></input>
+	<br />
+	<input type="submit">
+
+	</form>
+
+	<?php
 }
