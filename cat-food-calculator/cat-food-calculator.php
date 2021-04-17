@@ -10,6 +10,22 @@ Author URI:
 License: GPL2
 */
 
+if (isset($_POST['cat_weight'])) {
+	// do all of the processing and rendering inside this if
+	echo cfc_render();
+}
+
+function cfc_render() {
+	$cat_weight = intval($_POST['cat_weight']);
+	$dry_kcal   = ...
+
+	$how_much = cfc_how_much_food(...);
+
+	?>
+	<p>Feed <?php echo $how_much['qty_dry']; ?> tbs dry food and <?php echo $how_much['qty_cans']; ?> cans of wet food daily.</p>
+	<?php
+}
+
 function cfc_base_caloric_intake( $cat_weight ) {
 	$is_allowed_weight = $cat_weight >= 1 && $cat_weight <= 20;
 
