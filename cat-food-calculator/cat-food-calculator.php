@@ -10,12 +10,16 @@ Author URI:
 License: GPL2
 */
 
+include './cat-food-functions.php';
+
 if (isset($_POST['cat_weight'])) {
 	// do all of the processing and rendering inside this if
-	echo cfc_render();
+	cfc_render_results();
+} else {
+	cfc_render_form();
 }
 
-function cfc_render() {
+function cfc_render_results() {
 	$cat_weight = intval($_POST['cat_weight']);
 	$dry_kcal   = ...
 
